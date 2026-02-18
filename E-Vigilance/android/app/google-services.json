@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "211140625825",
+    "project_id": "e-vigilance-67783",
+    "storage_bucket": "e-vigilance-67783.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211140625825:android:c12dafa981fe103a64b7e0",
+        "android_client_info": {
+          "package_name": "com.example.evigilance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211140625825-of3lindl9cis3q3ehddtkc6cevn09e6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9E2Yqg3wYRW5gIMee7vKWEy2I6l-pbEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211140625825-of3lindl9cis3q3ehddtkc6cevn09e6i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "211140625825-f3vke7dgldh5vfj742g636v9s04j6p95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.evigilance"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
