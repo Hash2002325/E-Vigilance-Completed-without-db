@@ -85,6 +85,9 @@ class _AdditionalDetailsPageState extends State<AdditionalDetailsPage> {
     'dateTime': widget.reportData.dateTime?.toIso8601String(),
     'issueType': widget.reportData.issueType,
     'location': widget.reportData.location,
+    'latitude': widget.reportData.latitude,          // ADD THIS
+    'longitude': widget.reportData.longitude,        // ADD THIS
+    'evidencePath': widget.reportData.evidencePath,  // ADD THIS
     'additionalDetails': widget.reportData.additionalDetails,
   };
 

@@ -3,6 +3,7 @@ const ReportModel = require('../models/reportModel');
 class ReportService {
   // Create new report
   static createReport(userId, reportData) {
+    console.log('📍 RECEIVED REPORT DATA:', JSON.stringify(reportData, null, 2));
     const {
       evidencePath,
       vehicleType,
@@ -11,13 +12,16 @@ class ReportService {
       dateTime,
       issueType,
       location,
+      latitude,        
+      longitude, 
       additionalDetails
     } = reportData;
 
     // Validation
-    if (!vehicleType || !vehicleNumber || !dateTime || !issueType || !location) {
-      throw { status: 400, message: 'Required fields: vehicleType, vehicleNumber, dateTime, issueType, location' };
-    }
+    // Validation
+if (!vehicleType || !vehicleNumber || !dateTime || !issueType) {
+  throw { status: 400, message: 'Required fields: vehicleType, vehicleNumber, dateTime, issueType' };
+}
 
     const report = ReportModel.createReport({
       userId,
@@ -28,6 +32,8 @@ class ReportService {
       dateTime,
       issueType,
       location,
+      latitude,        
+      longitude,
       additionalDetails
     });
 

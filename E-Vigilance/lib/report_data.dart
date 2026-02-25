@@ -5,7 +5,9 @@ class ReportData {
   String? vehicleModel;
   DateTime? dateTime;
   String? issueType;
-  String? location; // later you can use LatLng instead
+  String? location; // text location or "Current location"
+  double? latitude;  // ADD THIS
+  double? longitude; // ADD THIS
   String? additionalDetails;
 
   ReportData({
@@ -16,6 +18,8 @@ class ReportData {
     this.dateTime,
     this.issueType,
     this.location,
+    this.latitude,
+    this.longitude,
     this.additionalDetails,
   });
 
@@ -30,6 +34,8 @@ ReportData(
   dateTime: $dateTime,
   issueType: $issueType,
   location: $location,
+  latitude: $latitude,
+  longitude: $longitude,
   additionalDetails: $additionalDetails,
 )
 ''';

@@ -13,6 +13,8 @@ class ReportModel {
       dateTime: reportData.dateTime,
       issueType: reportData.issueType,
       location: reportData.location,
+      latitude: reportData.latitude || null,       
+      longitude: reportData.longitude || null, 
       additionalDetails: reportData.additionalDetails || null,
       status: 'In Progress', // Default status
       createdAt: new Date().toISOString()

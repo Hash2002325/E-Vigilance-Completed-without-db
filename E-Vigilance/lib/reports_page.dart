@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'services/token_storage.dart';
 import 'services/report_service.dart';
@@ -119,6 +120,17 @@ class _ReportCard extends StatelessWidget {
     }
   }
 
+  String _formatLocation(dynamic report) {
+    // If we have coordinates, show them
+    if (report['latitude'] != null && report['longitude'] != null) {
+      final lat = report['latitude'].toStringAsFixed(4);
+      final lng = report['longitude'].toStringAsFixed(4);
+      return 'GPS: $lat, $lng';
+    }
+    // Otherwise show text location
+    return report['location'] ?? 'N/A';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -130,6 +142,7 @@ class _ReportCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ID + Status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -157,30 +170,93 @@ class _ReportCard extends StatelessWidget {
                 ),
               ],
             ),
+            
             const SizedBox(height: 14),
+            
+            // Evidence Preview (Photo/Video)
+            if (report['evidencePath'] != null)
+              Container(
+                height: 120,
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey.shade200,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: report['evidencePath'].toString().contains('.mp4') ||
+                          report['evidencePath'].toString().contains('video')
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.play_circle_outline,
+                                size: 50,
+                                color: Color(0xFF0074D9),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Video Evidence',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Image.file(
+                          File(report['evidencePath']),
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.image, size: 40, color: Colors.grey),
+                                  SizedBox(height: 4),
+                                  Text('Photo Evidence', style: TextStyle(fontSize: 12)),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                ),
+              ),
+            
+            // Complaint
             const _LabelText('Complaint'),
             Text(
               report['issueType'] ?? 'N/A',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
+            
+            // Vehicle
             const _LabelText('Vehicle'),
             Text(
               '${report['vehicleType'] ?? 'N/A'} - ${report['vehicleNumber'] ?? 'N/A'}',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
+            
+            // Date
             const _LabelText('Date'),
             Text(
               _formatDate(report['dateTime']),
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
+            
+            // Location
             const _LabelText('Location'),
             Text(
-              report['location'] ?? 'N/A',
+              _formatLocation(report),
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
+            
             const SizedBox(height: 10),
             const Divider(thickness: 1),
             Center(
