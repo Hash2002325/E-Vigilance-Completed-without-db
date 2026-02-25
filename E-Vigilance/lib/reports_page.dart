@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'services/token_storage.dart';
 import 'services/report_service.dart';
+import 'report_detail_page.dart';  // ADD THIS IMPORT
 
 class ReportsPage extends StatefulWidget {
   const ReportsPage({super.key});
@@ -121,13 +122,11 @@ class _ReportCard extends StatelessWidget {
   }
 
   String _formatLocation(dynamic report) {
-    // If we have coordinates, show them
     if (report['latitude'] != null && report['longitude'] != null) {
       final lat = report['latitude'].toStringAsFixed(4);
       final lng = report['longitude'].toStringAsFixed(4);
       return 'GPS: $lat, $lng';
     }
-    // Otherwise show text location
     return report['location'] ?? 'N/A';
   }
 
@@ -142,7 +141,6 @@ class _ReportCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ID + Status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -173,7 +171,6 @@ class _ReportCard extends StatelessWidget {
             
             const SizedBox(height: 14),
             
-            // Evidence Preview (Photo/Video)
             if (report['evidencePath'] != null)
               Container(
                 height: 120,
@@ -226,7 +223,6 @@ class _ReportCard extends StatelessWidget {
                 ),
               ),
             
-            // Complaint
             const _LabelText('Complaint'),
             Text(
               report['issueType'] ?? 'N/A',
@@ -234,7 +230,6 @@ class _ReportCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             
-            // Vehicle
             const _LabelText('Vehicle'),
             Text(
               '${report['vehicleType'] ?? 'N/A'} - ${report['vehicleNumber'] ?? 'N/A'}',
@@ -242,7 +237,6 @@ class _ReportCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             
-            // Date
             const _LabelText('Date'),
             Text(
               _formatDate(report['dateTime']),
@@ -250,7 +244,6 @@ class _ReportCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             
-            // Location
             const _LabelText('Location'),
             Text(
               _formatLocation(report),
@@ -262,7 +255,13 @@ class _ReportCard extends StatelessWidget {
             Center(
               child: TextButton(
                 onPressed: () {
-                  // TODO: open detailed report page
+                  // NAVIGATE TO DETAIL PAGE
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ReportDetailPage(report: report),
+                    ),
+                  );
                 },
                 child: const Text(
                   'More info',
